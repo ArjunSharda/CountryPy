@@ -1,6 +1,6 @@
 import click
-from src.countrypy.country_data import CountryData
-from src.countrypy.ascii_art import print_ascii
+from countrypy.country_data import CountryData
+from countrypy.ascii_art import print_ascii
 import time
 from colorama import Fore, Style
 import os
