@@ -1,16 +1,16 @@
 [build-system]
-requires = ["setuptools>=61.0", "wheel"]
+requires = ["setuptools", "click", "requests", "colorama"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "countrypy"
 version = "1.1.0"
 authors = [
-    { name = "Arjun Sharda", email = "sharda.aj17@gmail.com" }
+    { name="Arjun Sharda", email="sharda.aj17@gmail.com" }
 ]
 description = "A modern Python library for country data"
 readme = "README.md"
-license = { file = "LICENSE" }
+license = { file="LICENSE" }
 requires-python = ">=3.7"
 keywords = ["country", "languages", "nation", "currency", "world", "lightweight", "efficient"]
 classifiers = [
@@ -26,6 +26,7 @@ classifiers = [
 [project.scripts]
 countrypy = "countrypy.cli:cli"
 
+
 [project.urls]
-Homepage = "https://github.com/ArjunSharda/CountryPy"
-Bug Tracker = "https://github.com/ArjunSharda/CountryPy/issues"
+"Homepage" = "https://github.com/ArjunSharda/countrypy"
+"Bug Tracker" = "https://github.com/ArjunSharda/countrypy/issues"
