@@ -1,4 +1,6 @@
 import requests
+from countrypy.country_data import *
+from countrypy.search import *
 
 API_URL = ("https://restcountries.com/v3.1/all"
            "?fields=name,flags,cca2,capital,idd,tld,population,languages,"
