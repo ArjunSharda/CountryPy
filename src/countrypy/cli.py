@@ -196,12 +196,14 @@ def search(commands, country_code_or_name, field):
 
 @cli.command()
 @click.argument('field')
-@click.argument('value')
+@click.argument('value', nargs=-1)
 def search_by(field, value):
     """Search and display countries by a specific field and value."""
     loading_animation()
     country_data = CountryData()
     countries = country_data.data
+
+    value = " ".join(value)
 
     matching_countries = []
 
@@ -211,10 +213,10 @@ def search_by(field, value):
         if field in country_info:
             field_value = country_info[field]
             if isinstance(field_value, (list, tuple)):
-                if value in [str(v).lower() for v in field_value]:
+                if value.lower() in [str(v).lower() for v in field_value]:
                     matching_countries.append(country_info['name'])
             elif isinstance(field_value, dict):
-                if value in [str(v).lower() for v in field_value.values()]:
+                if value.lower() in [str(v).lower() for v in field_value.values()]:
                     matching_countries.append(country_info['name'])
             elif str(field_value).lower() == value.lower():
                 matching_countries.append(country_info['name'])
