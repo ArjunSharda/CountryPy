@@ -45,7 +45,6 @@ v1.1.0 Changes
 --------------
 v1.1.0
 - **[ADDED]** Added `Search` option & `search_by` for CLI - you can now sort countries by data such as timezones & languages!
-- **[ADDED]** Added testing
 - **[ADDED]** Added more error handling
 - **[MODIFIED]** Changed API URL to use filters to reduce load time
 - **[PATCH]** Fixed a bug for both CLI and non-cli with phone country codes and their suffixes
