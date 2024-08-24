@@ -193,5 +193,40 @@ def search(commands, country_code_or_name, field):
     else:
         fail_message(f"Country {country_code_or_name} not found.")
 
+
+@cli.command()
+@click.argument('field')
+@click.argument('value', nargs=-1)
+def search_by(field, value):
+    """Search and display countries by a specific field and value."""
+    loading_animation()
+    country_data = CountryData()
+    countries = country_data.data
+
+    value = " ".join(value)
+
+    matching_countries = []
+
+    for country in countries:
+        country_info = country_data._extract_country_info(country)
+
+        if field in country_info:
+            field_value = country_info[field]
+            if isinstance(field_value, (list, tuple)):
+                if value.lower() in [str(v).lower() for v in field_value]:
+                    matching_countries.append(country_info['name'])
+            elif isinstance(field_value, dict):
+                if value.lower() in [str(v).lower() for v in field_value.values()]:
+                    matching_countries.append(country_info['name'])
+            elif str(field_value).lower() == value.lower():
+                matching_countries.append(country_info['name'])
+
+    if matching_countries:
+        success_message(f"Countries found with {field} = {value}:")
+        for country in matching_countries:
+            click.echo(Fore.CYAN + country + Style.RESET_ALL)
+    else:
+        fail_message(f"No countries found with {field} = {value}.")
+
 if __name__ == '__main__':
     cli()
