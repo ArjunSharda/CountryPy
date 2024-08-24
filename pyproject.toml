@@ -1,23 +1,36 @@
 [build-system]
-requires = ["setuptools>=61.0"]
+requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "countrypy"
-version = "1.0.0"
+version = "1.1.0"
 authors = [
-    { name="Arjun Sharda", email="sharda.aj17@gmail.com" }
+    { name = "Arjun Sharda", email = "sharda.aj17@gmail.com" }
 ]
-description = "A modern python library for country data"
+description = "A modern Python library for country data"
 readme = "README.md"
-license = { file="LICENSE" }
-requires-python = ">=3.6"
+license = { file = "LICENSE" }
+requires-python = ">=3.7"
+keywords = [ "country", "languages", "nation", "currency", "world", "lightweight", "efficient" ]
 classifiers = [
     "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
 
+[tool.poetry.dependencies]
+python = ">=3.7"
+
+[tool.poetry.group.dev.dependencies]
+click = "^8.1.7"
+requests = "^2.32.3"
+colorama = "^0.4.6"
+
 [project.urls]
-"Homepage" = "https://github.com/ArjunSharda/CountryPy"
-"Bug Tracker" = "https://github.com/ArjunSharda/CountryPy/issues"
+Homepage = "https://github.com/ArjunSharda/CountryPy"
+Bug Tracker = "https://github.com/ArjunSharda/CountryPy/issues"
