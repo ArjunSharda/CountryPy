@@ -25,6 +25,15 @@ Quick Start
 'Washington, D.C'
 ```
 
+Search
+-----------
+```python
+>>> from countrypy import Search
+>>> searching = Search(Search.timezones, "UTC-12:00")
+>>> print(searching)
+'United States'
+```
+
 CLI Quick Start
 ---------------
 ```bash
@@ -32,10 +41,14 @@ $ countrypy quickinfo US
 ```
 Take a look at more examples in the [examples](https://github.com/ArjunSharda/CountryPy/tree/main/examples) folder!
 
-v1.0 Changes
+v1.1.0 Changes
 --------------
-v1.0
-- **[START]** Start of the CountryPy library
+v1.1.0
+- **[ADDED]** Added `Search` option & `search_by` for CLI - you can now sort countries by data such as timezones & languages!
+- **[ADDED]** Added testing
+- **[ADDED]** Added more error handling
+- **[MODIFIED]** Changed API URL to use filters to reduce load time
+- **[PATCH]** Fixed a bug for both CLI and non-cli with phone country codes and their suffixes
 
 
 ## Want to contribute?
