@@ -4,60 +4,68 @@ import time
 API_URL = "https://restcountries.com/v3.1/all"
 
 class CountryData:
+    """Class to fetch and manage country data from an external API."""
+    
     def __init__(self):
         self.data = self.fetch_country_data()
 
     @staticmethod
     def fetch_country_data():
+        """Fetch country data from the API."""
         time.sleep(1)
         response = requests.get(API_URL)
         if response.status_code == 200:
             return response.json()
-        else:
-            raise Exception("Failed to fetch country data")
+        raise Exception("Failed to fetch country data")
 
     def get_country_info(self, country_code):
+        """Retrieve country information by ISO code."""
         for country in self.data:
             if country['cca2'] == country_code:
                 return self._extract_country_info(country)
         return None
 
     def get_country_info_by_name(self, foreign_country_name):
+        """Retrieve country information by name."""
         foreign_country_name = foreign_country_name.lower()
         for country in self.data:
             if (foreign_country_name in country['name']['common'].lower() or
-                foreign_country_name in country['name']['official'].lower()):
+                    foreign_country_name in country['name']['official'].lower()):
                 return self._extract_country_info(country)
 
             native_names = country['name'].get('nativeName', {})
             for native_name_info in native_names.values():
                 if (foreign_country_name in native_name_info['common'].lower() or
-                    foreign_country_name in native_name_info['official'].lower()):
+                        foreign_country_name in native_name_info['official'].lower()):
                     return self._extract_country_info(country)
 
             alt_spellings = country.get('altSpellings', [])
             for alt_name in alt_spellings:
                 if foreign_country_name in alt_name.lower():
                     return self._extract_country_info(country)
-
         return None
 
     def get_all_countries(self):
+        """Get a list of all country names."""
         return [country['name']['common'] for country in self.data]
 
     def get_countries_by_language(self, language_code):
+        """Retrieve countries by language code."""
         return [country['name']['common'] for country in self.data if language_code in country['languages'].values()]
 
     def get_countries_by_currency(self, currency_code):
+        """Retrieve countries by currency code."""
         return [country['name']['common'] for country in self.data if currency_code in country.get('currencies', {})]
 
     def get_phone_code(self, country_code):
+        """Retrieve the phone code for a country by ISO code."""
         for country in self.data:
             if country['cca2'] == country_code:
                 return country['idd']['root']
         return None
 
     def get_all_timezones(self, country_code):
+        """Retrieve all timezones for a country by ISO code."""
         for country in self.data:
             if country['cca2'] == country_code:
                 return country['timezones']
@@ -65,6 +73,7 @@ class CountryData:
 
     @staticmethod
     def _extract_country_info(country):
+        """Helper function to extract and structure country information."""
         phone_code = None
         if 'idd' in country:
             root = country['idd'].get('root', '')
@@ -102,6 +111,8 @@ class CountryData:
 
 
 class Search:
+    """Class to search for countries based on specific attributes."""
+    
     name = 'name'
     official_name = 'official_name'
     iso_code = 'iso_code'
@@ -131,6 +142,7 @@ class Search:
         self.results = self._search()
 
     def _search(self):
+        """Perform the search based on the attribute and value."""
         matching_countries = []
 
         for country in self.data_source.data:
@@ -140,7 +152,6 @@ class Search:
                 continue
 
             country_value = country_info[self.attribute]
-
 
             if isinstance(country_value, (str, bool, int, float)) and self._compare_values(country_value):
                 matching_countries.append(country_info)
