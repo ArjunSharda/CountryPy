@@ -1,6 +1,11 @@
 CountryPy
 =========
 
+<img align="left" src="http://estruyf-github.azurewebsites.net/api/VisitorHit?user=ArjunSharda&repo=CountryPy&countColorcountColor&countColor=%237B1E7B"/>
+<img align="right" src="https://img.shields.io/github/repo-size/ArjunSharda/CountryPy?style=for-the-badge&logo=appveyor" alt="GitHub repo size"/>
+
+![CountryPy](https://socialify.git.ci/ArjunSharda/CountryPy/image?description=1&descriptionEditable=%F0%9F%97%BA%EF%B8%8F%20A%20lightweight%20%26%20efficient%20library%20for%20fetching%20country%20data.&font=Raleway&forks=1&issues=1&language=1&logo=https%3A%2F%2Fraw.githubusercontent.com%2FArjunSharda%2FCountryPy%2Fmain%2Fext%2FCountryPy.png&name=1&owner=1&pattern=Signal&pulls=1&stargazers=1&theme=Auto)
+
 # Description
 
 CountryPy is a lightweight & efficient modern country data library, used for fetching information about a variety of countries with support for command-line interface (CLI).
