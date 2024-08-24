@@ -1,6 +1,6 @@
 import click
-from src.countrypy.country_data import CountryData
-from src.countrypy.ascii_art import print_ascii
+from countrypy.country_data import CountryData
+from countrypy.ascii_art import print_ascii
 import time
 from colorama import Fore, Style
 import os
@@ -192,6 +192,39 @@ def search(commands, country_code_or_name, field):
             fail_message(f"Field '{field}' not found in {country['name']}. Use '--commands' to see available fields.")
     else:
         fail_message(f"Country {country_code_or_name} not found.")
+
+
+@cli.command()
+@click.argument('field')
+@click.argument('value')
+def search_by(field, value):
+    """Search and display countries by a specific field and value."""
+    loading_animation()
+    country_data = CountryData()
+    countries = country_data.data
+
+    matching_countries = []
+
+    for country in countries:
+        country_info = country_data._extract_country_info(country)
+
+        if field in country_info:
+            field_value = country_info[field]
+            if isinstance(field_value, (list, tuple)):
+                if value in [str(v).lower() for v in field_value]:
+                    matching_countries.append(country_info['name'])
+            elif isinstance(field_value, dict):
+                if value in [str(v).lower() for v in field_value.values()]:
+                    matching_countries.append(country_info['name'])
+            elif str(field_value).lower() == value.lower():
+                matching_countries.append(country_info['name'])
+
+    if matching_countries:
+        success_message(f"Countries found with {field} = {value}:")
+        for country in matching_countries:
+            click.echo(Fore.CYAN + country + Style.RESET_ALL)
+    else:
+        fail_message(f"No countries found with {field} = {value}.")
 
 if __name__ == '__main__':
     cli()

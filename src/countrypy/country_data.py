@@ -26,13 +26,13 @@ class CountryData:
         foreign_country_name = foreign_country_name.lower()
         for country in self.data:
             if (foreign_country_name in country['name']['common'].lower() or
-                    foreign_country_name in country['name']['official'].lower()):
+                foreign_country_name in country['name']['official'].lower()):
                 return self._extract_country_info(country)
 
             native_names = country['name'].get('nativeName', {})
             for native_name_info in native_names.values():
                 if (foreign_country_name in native_name_info['common'].lower() or
-                        foreign_country_name in native_name_info['official'].lower()):
+                    foreign_country_name in native_name_info['official'].lower()):
                     return self._extract_country_info(country)
 
             alt_spellings = country.get('altSpellings', [])
@@ -65,16 +65,37 @@ class CountryData:
 
     @staticmethod
     def _extract_country_info(country):
+        phone_code = None
+        if 'idd' in country:
+            root = country['idd'].get('root', '')
+            suffixes = country['idd'].get('suffixes', [])
+            if len(suffixes) == 1:
+                phone_code = f"{root}{suffixes[0]}"
+            elif len(suffixes) > 1:
+                phone_code = root
+            else:
+                phone_code = root
+
         return {
             'name': country['name']['common'],
             'official_name': country['name']['official'],
             'iso_code': country['cca2'],
-            'capital': country.get('capital', ['N/A']),
+            'capital': country.get('capital', ['N/A'])[0],
             'flag': country['flags']['png'] if 'flags' in country else None,
-            'phone_code_root': country['idd']['root'] if 'idd' in country else None,
+            'phone_code_root': phone_code,
             'tld': country.get('tld', []),
             'population': country.get('population', 'N/A'),
             'languages': country.get('languages', {}),
             'timezones': country.get('timezones', []),
-            'currency': list(country['currencies'].keys())[0] if 'currencies' in country else 'N/A'
+            'currency': list(country['currencies'].keys())[0] if 'currencies' in country else 'N/A',
+            'region': country.get('region', 'N/A'),
+            'subregion': country.get('subregion', 'N/A'),
+            'independent': country.get('independent', False),
+            'area': country.get('area', 'N/A'),
+            'landlocked': country.get('landlocked', False),
+            'demonym': country['demonyms']['eng']['m'] if 'demonyms' in country else 'N/A',
+            'un_member': country.get('unMember', False),
+            'google_maps_link': country['maps']['googleMaps'] if 'maps' in country else None,
+            'fifa_code': country.get('fifa', 'N/A'),
+            'start_of_week': country.get('startOfWeek', 'N/A')
         }
